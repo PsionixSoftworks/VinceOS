@@ -1,0 +1,13 @@
+make --dry-run --keep-going --print-directory
+make: Entering directory '/home/magnus/Desktop/GIT/VinceOS'
+i686-elf-as assemb/boot.S -o boot.o
+i686-elf-gcc -c init/main.c -o main.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra -Iinclude
+i686-elf-gcc -T linker.ld -o VinceOS.bin -ffreestanding -O2 -nostdlib boot.o main.o -lgcc
+mkdir -p isodir/boot/grub
+cp VinceOS.bin isodir/boot/VinceOS.bin
+cp grub.cfg isodir/boot/grub/grub.cfg
+grub-mkrescue -o VinceOS.iso isodir
+qemu-system-i386 -cdrom VinceOS.iso
+rm -rf *.o *.bin *.iso
+make: Leaving directory '/home/magnus/Desktop/GIT/VinceOS'
+ 

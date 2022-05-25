@@ -1,3 +1,6 @@
+#ifndef _BOOTLOADER_S
+#define _BOOTLOADER_S
+
 .set ALIGN,		1 << 0
 .set MEMINFO,	1 << 1
 .set FLAGS,		ALIGN | MEMINFO
@@ -21,8 +24,12 @@ stack_top:
 .type 	_start, @function
 _start:
 	mov $stack_top, %esp
+	push %ebx
+	push %eax
 	call kernel_entry
 	cli
 1: 	hlt
 	jmp 1b
 .size _start, . - _start
+
+#endif
