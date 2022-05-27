@@ -1,13 +1,12 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # GNU Make 4.2.1
- 
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2016 Free Software Foundation, Inc.
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed May 25 20:02:33 2022
+# Make data base, printed on Fri May 27 16:17:19 2022
 
 # Variables
 
@@ -41,7 +40,6 @@ MAKE_VERSION := 4.2.1
 CURDIR := /home/magnus/Desktop/GIT/VinceOS
 # makefile
 SHELL = /bin/sh
- 
 # makefile (from 'Makefile', line 12)
 RM = rm -rf
 # environment
@@ -110,6 +108,7 @@ SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 GIO_LAUNCHED_DESKTOP_FILE_PID = 1576
 # automatic
 %F = $(notdir $%)
+ 
 # environment
 DISPLAY = :0
 # environment
@@ -227,7 +226,7 @@ CHROME_DESKTOP = code-url-handler.desktop
 # default
 .INCLUDE_DIRS = /usr/include /usr/local/include /usr/include
 # makefile (from 'Makefile', line 7)
-ALL_FILES = boot.o main.o kernel.o vga.o itoa.o strlen.o
+ALL_FILES = boot.o main.o kernel.o vga.o itoa.o strlen.o gdt.o
 # environment
 GJS_DEBUG_OUTPUT = stderr
 # default
@@ -245,9 +244,9 @@ VSCODE_PID = 1576
 
 # Directories
 
-# . (device 53, inode 1707710): 20 files, no impossibilities.
+# . (device 53, inode 1707710): 22 files, no impossibilities.
 
-# 20 files, no impossibilities in 1 directories.
+# 22 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -301,7 +300,7 @@ cleanup:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 33):
+#  recipe to execute (from 'Makefile', line 34):
 	$(RM) *.o *.bin *.iso *isodir
 
 # Not a target:
@@ -313,7 +312,7 @@ cleanup:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-25 20:02:13.986736264
+#  Last modified 2022-05-27 16:16:50.268889901
 #  File has been updated.
 #  Successfully updated.
 
@@ -327,12 +326,13 @@ kernel:
 	$(CC) driver/vga.c -o vga.o $(CC_FLAGS)
 	$(CC) lib/itoa.c -o itoa.o $(CC_FLAGS)
 	$(CC) lib/strlen.c -o strlen.o $(CC_FLAGS)
+	$(CC) i386/gdt.c -o gdt.o $(CC_FLAGS)
 
 runner:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 31):
+#  recipe to execute (from 'Makefile', line 32):
 	$(RUNNER) $(ISO_OUTPUT)
 
 # Not a target:
@@ -345,7 +345,7 @@ linker:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 25):
+#  recipe to execute (from 'Makefile', line 26):
 	$(LINKER) linker.ld -o $(BINARY) $(BIN_FLAGS) $(ALL_FILES) 
 	mkdir -p isodir/boot/grub
 	cp VinceOS.bin isodir/boot/VinceOS.bin
@@ -360,12 +360,12 @@ linker:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 31 / storage = 244 B / avg = 7 B
-# current buf: size = 8162 B / used = 244 B / count = 31 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 33 / storage = 258 B / avg = 7 B
+# current buf: size = 8162 B / used = 258 B / count = 33 / avg = 7 B
 
-# strcache performance: lookups = 50 / hit rate = 38%
+# strcache performance: lookups = 52 / hit rate = 36%
 # hash-table stats:
-# Load=31/8192=0%, Rehash=0, Collisions=1/50=2%
-# Finished Make data base on Wed May 25 20:02:33 2022
+# Load=33/8192=0%, Rehash=0, Collisions=1/52=2%
+# Finished Make data base on Fri May 27 16:17:19 2022
 
  

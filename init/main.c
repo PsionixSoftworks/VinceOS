@@ -5,6 +5,7 @@
 #include <multiboot.h>
 #include <driver/vga.h>
 #include <kernel.h>
+#include <i386/gdt.h>
 
 #define CHECK_FLAG(flags, bits)		((flags) & (1 << (bit)))
 
@@ -16,6 +17,8 @@ void kernel_entry(unsigned long ebx, unsigned long eax)
 	// Initialize the VGA driver and clear the screen:
 	vga_init();
 	cursor_enable(BLOCK);
+
+	gdt_init();
 
 	// We need the Multiboot info so we can validate the kernel:
 	multiboot_info_t *mb_info = (multiboot_info_t *)ebx;
