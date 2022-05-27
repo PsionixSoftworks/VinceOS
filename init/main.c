@@ -6,6 +6,7 @@
 #include <driver/vga.h>
 #include <kernel.h>
 #include <i386/gdt.h>
+#include <i386/idt.h>
 
 #define CHECK_FLAG(flags, bits)		((flags) & (1 << (bit)))
 
@@ -19,6 +20,7 @@ void kernel_entry(unsigned long ebx, unsigned long eax)
 	cursor_enable(BLOCK);
 
 	gdt_init();
+	idt_init();
 
 	// We need the Multiboot info so we can validate the kernel:
 	multiboot_info_t *mb_info = (multiboot_info_t *)ebx;
