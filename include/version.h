@@ -4,9 +4,13 @@
 typedef struct
 {
 	const char *kernel_name;
-	const char *kernel_version;
+	const char *kernel_version_str;
+	const int kernel_version;
 } kernel_info_t;
 
-#define OS_SETUP(name, version)	static kernel_info_t info = {.kernel_name=name, .kernel_version=version};
+#define OS_SETUP(name, version)	static kernel_info_t info = {	\
+	.kernel_name=name, 											\
+	.kernel_version=version										\
+};
 
 #endif

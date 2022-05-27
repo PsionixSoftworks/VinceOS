@@ -9,13 +9,13 @@
 #define CHECK_FLAG(flags, bits)		((flags) & (1 << (bit)))
 
 // Declare global static variables:
-unsigned short *vga_mem = NULL;		// Used for displaying ASCII compatible text to the display buffer.
 static bool running = true;			// Used to keep the console alive until it's terminated.
 
 void kernel_entry(unsigned long ebx, unsigned long eax)
 {
-	// Access the video buffer for displaying text on screen. Current mode is 80x25 Color Text Mode.
-	vga_mem = (unsigned short *)VGA_ADDR;
+	// Initialize the VGA driver and clear the screen:
+	vga_init();
+	cursor_enable(BLOCK);
 
 	// We need the Multiboot info so we can validate the kernel:
 	multiboot_info_t *mb_info = (multiboot_info_t *)ebx;
@@ -25,11 +25,12 @@ void kernel_entry(unsigned long ebx, unsigned long eax)
 		return;
 	
 	// If everything went smoothly, we should see an 'A' and 'B' on the screen:
-	OS_SETUP("VinceOS", "0.01u");
+	OS_SETUP(OS_NAME, OS_VERSION);
 	if (info.kernel_name != NULL)
-		vga_mem[0] = 'A' | 0xF << 8;
-	if (info.kernel_version != NULL)
-		vga_mem[1] = 'B' | 0xF << 8;
+		k_printf("Kernel Name: %s\n", info.kernel_name);
+	if (info.kernel_version > 0)
+		k_printf("Kernel Version: %d\n", info.kernel_version);
+	
 	
 	// This will be used when we start processing input and output:
 	while (running)
