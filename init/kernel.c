@@ -1,9 +1,11 @@
 #include <kernel.h>
 #include <portctl.h>
+
 #include <stdarg.h>
 #include <stdint.h>
 #include <string.h>
 #include <stddef.h>
+#include <stdlib.h>
 
 #define CURSOR_CMD		0x3D4
 #define CURSOR_DATA		0x3D5
@@ -164,4 +166,6 @@ cursor_get_pos(void)
 	pos |= inb(CURSOR_DATA);
 	outb(CURSOR_CMD, 0x0E);
 	pos |= ((uint16_t)inb(CURSOR_DATA)) << 8;
+
+	return pos;
 }

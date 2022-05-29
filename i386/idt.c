@@ -1,6 +1,6 @@
 #include <i386/idt.h>
 #include <stdint.h>
-#include <stdbool.h>
+#include <pic.h>
 
 typedef struct
 {
@@ -24,7 +24,6 @@ static bool 		vectors[32];
 
 extern void *isr_stub_table[];
 
-__attribute__((noreturn))
 void exception_handler(void);
 void idt_set_descriptor(uint8_t vector, void *isr, uint8_t flags);
 
@@ -60,4 +59,16 @@ idt_init(void)
 
 	__asm__ volatile ("lidt %0" : : "m"(idtr));
 	__asm__ volatile ( "sti" );
+}
+
+bool
+are_interrupts_enabled(void)
+{
+	unsigned long flags;
+	__asm__ volatile (
+		"pushf	\n\t"
+		"pop %0"
+		: "=g"(flags)
+	);
+	return flags & (1 << 9);
 }

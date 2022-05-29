@@ -9,6 +9,8 @@
 #define inw(port)				__inw(port)
 #define inl(port)				__inl(port)
 
+#define io_wait()				__io_wait()
+
 static inline void 
 __outb(uint16_t port, uint8_t value)
 {
@@ -58,6 +60,12 @@ __inl(uint16_t port)
 		: "=a"(value) 
 		: "Nd"(port) );
 	return (value);
+}
+
+static inline void
+__io_wait(void)
+{
+	__outb(0x80, 0);
 }
 
 #endif

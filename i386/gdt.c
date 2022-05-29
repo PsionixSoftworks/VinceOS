@@ -31,11 +31,11 @@ gdt_init(void)
 	pgdt.limit 	= (sizeof(gdt_t) * MAX_GDT_ENTRIES) - 1;
 	pgdt.base 	= (uint32_t)&gdt;
 
-	gdt_add_segment(&gdt, 0, 0, 0, 0);
-	gdt_add_segment(&gdt, 0x00000000, 0xFFFFFFFF, 0x9A, 0xCF);
-	gdt_add_segment(&gdt, 0x00000000, 0xFFFFFFFF, 0x92, 0xCF);
-	gdt_add_segment(&gdt, 0x00000000, 0xFFFFFFFF, 0xFA, 0xCF);
-	gdt_add_segment(&gdt, 0x00000000, 0xFFFFFFFF, 0xF2, 0xCF);
+	gdt_add_segment(gdt, 0, 0, 0, 0);
+	gdt_add_segment(gdt, 0x00000000, 0xFFFFFFFF, 0x9A, 0xCF);
+	gdt_add_segment(gdt, 0x00000000, 0xFFFFFFFF, 0x92, 0xCF);
+	gdt_add_segment(gdt, 0x00000000, 0xFFFFFFFF, 0xFA, 0xCF);
+	gdt_add_segment(gdt, 0x00000000, 0xFFFFFFFF, 0xF2, 0xCF);
 
 	gdt_install((uint32_t)&pgdt);
 }
