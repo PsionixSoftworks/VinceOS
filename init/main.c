@@ -4,7 +4,7 @@
 
 #include <multiboot.h>
 #include <driver/vga.h>
-#include <kernel.h>
+#include <kernel/kernel.h>
 #include <i386/gdt.h>
 #include <i386/idt.h>
 

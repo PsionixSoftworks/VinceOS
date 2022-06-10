@@ -19,7 +19,7 @@ bootloader:
 	$(NSM) assemb/exception_handler.asm -o exception_handler.o
 kern:
 	$(CC) init/main.c -o main.o $(CC_FLAGS)
-	$(CC) init/kernel.c -o kernel.o $(CC_FLAGS)
+	$(CC) kernel/kernel.c -o kernel.o $(CC_FLAGS)
 	$(CC) driver/vga.c -o vga.o $(CC_FLAGS)
 	$(CC) lib/itoa.c -o itoa.o $(CC_FLAGS)
 	$(CC) lib/strlen.c -o strlen.o $(CC_FLAGS)

@@ -10,7 +10,8 @@ typedef struct
 
 #define OS_SETUP(name, version)	static kernel_info_t info = {	\
 	.kernel_name=name, 											\
-	.kernel_version=version										\
+	.kernel_version=version,									\
+	.kernel_version_str=OS_VERSION_STR							\
 };
 
 #endif

@@ -2,7 +2,7 @@
 #define _EXCEPTION_H
 
 #include <i386/idt.h>
-#include <kernel.h>
+#include <kernel/kernel.h>
 
 /* INT $0x0 */
 __attribute__((interrupt)) static inline void

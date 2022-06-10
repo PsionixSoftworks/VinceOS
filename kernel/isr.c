@@ -1,3 +1,3 @@
 #include <isr.h>
-#include <kernel.h>
+#include <kernel/kernel.h>>
 #include <stdbool.h>

@@ -1,7 +1,7 @@
 #include <i386/idt.h>
 #include <stdint.h>
 #include <pic.h>
-#include <kernel.h>
+#include <kernel/kernel.h>
 #include <exception.h>
 #include <stdbool.h>
 

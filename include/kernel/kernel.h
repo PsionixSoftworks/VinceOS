@@ -1,23 +1,13 @@
 #ifndef _KERNEL_H
 #define _KERNEL_H
 
-#ifndef _VERSION_H
-#include "version.h"
-#endif
+#include <config.h>
 
 #ifndef _VGA_H
 #include "driver/vga.h"
 #endif
 
 #include <stdint.h>
-
-#define OS_VERSION_MAJOR	0
-#define OS_VERSION_MINOR	0
-#define OS_VERSION_BUILD	1
-#define OS_VERSION_RELEASE	20
-#define OS_NAME				"VinceOS"
-#define OS_VERSION_STR		"0.01u"
-#define OS_VERSION			(OS_VERSION_MAJOR * OS_VERSION_MINOR + OS_VERSION_BUILD * OS_VERSION_RELEASE)
 
 #ifdef __cplusplus
 extern "C" {
