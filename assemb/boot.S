@@ -3,34 +3,8 @@
 
 #define ASM_FILE		1
 #include <multiboot.h>
+#include <boot.h>
 
-/* Set the macro below to 1 to enable Graphic Mode */
-#define USE_GFX_MODE	0
-
-/* For consistency sake, take off the 'MULTIBOOT_' prefix so 'AOUT_KLUDGE' isn't alone. */
-#define HEADER_MAGIC	MULTIBOOT_HEADER_MAGIC
-#define PAGE_ALIGN		MULTIBOOT_PAGE_ALIGN
-#define MEMORY_INFO		MULTIBOOT_MEMORY_INFO
-
-/* We want to be able to just toggle Graphic Mode on and off, so we'll de this */
-#if defined(USE_GFX_MODE) && USE_GFX_MODE == 1
-#define VIDEO_MODE		MULTIBOOT_VIDEO_MODE
-#else
-#define VIDEO_MODE		0
-#endif
-
-/* Check if the '__ELF__' macro is defined or not. If not, it will expand to the AOUT Kludge. */
-#ifdef __ELF__
-#define AOUT_KLUDGE		0
-#else
-#define AOUT_KLUDGE		MULTIBOOT_AOUT_KLUDGE
-#endif
-
-#define HEADER_FLAGS	(PAGE_ALIGN | MEMORY_INFO |  VIDEO_MODE | AOUT_KLUDGE)
-#define STACK_SIZE		(1 << 16)
-
-/* Check if this is an assembler file (hint, it is. Duh!) */
-#ifdef __ASSEMBLER__
 /* Define the entry point for the linker */
 .globl _start
 
@@ -86,10 +60,8 @@ multiboot_entry:
 
 	/* Now we need to call the kernel entry and run the halt loop */
 	call kernel_entry
-	cli
 1: 	hlt
 	jmp 1b
 .comm stack, STACK_SIZE
-#endif
 
 #endif

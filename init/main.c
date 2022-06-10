@@ -9,6 +9,8 @@
 #include <i386/idt.h>
 
 #include <pic.h>
+#include <isr.h>
+#include <boot.h>
 
 #define CHECK_FLAG(flags, bits)		((flags) & (1 << (bits)))
 
@@ -21,13 +23,20 @@ void kernel_entry(unsigned long ebx, unsigned long eax)
 	vga_init();
 	cursor_enable(BLOCK);
 
+	// Setup the GDT and the IDT:
 	gdt_init();
 	idt_init();
 
+	pic_disable();
 	pic_remap(0x20, 0x28);
 
-	if (are_interrupts_enabled())
-		k_printf("Interrupts are enabled!\n");
+	__asm__ volatile ( "sti" );
+
+	__setup_exceptions();
+
+	bool ints_enabled = idt_are_interrupts_enabled();
+	if (ints_enabled)
+		k_printf("Interrupts are enabled...\n");
 
 	// We need the Multiboot info so we can validate the kernel:
 	multiboot_info_t *mb_info = (multiboot_info_t *)eax;
@@ -101,7 +110,8 @@ void kernel_entry(unsigned long ebx, unsigned long eax)
 		);
 	}
 
-	//__asm__ ("int $0x0");	// Interrupts the CPU before it has the chance to do everything below. Also, INT 0 is Division By Zero Exception.
+	if (!USE_GFX_MODE)
+		k_printf("Using Color Text mode...\n");
 
 	// This will be used when we start processing input and output:
 	while (running)
